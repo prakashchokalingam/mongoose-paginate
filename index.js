@@ -25,6 +25,8 @@ function paginate(query, options, callback) {
   let lean = options.lean || false;
   let leanWithId = options.leanWithId ? options.leanWithId : true;
   let limit = options.limit ? options.limit : 10;
+  let docsName = options.docsName || 'docs';
+
   let page, offset, skip, promises;
   if (options.offset) {
     offset = options.offset;
@@ -65,7 +67,7 @@ function paginate(query, options, callback) {
   promises = Object.keys(promises).map((x) => promises[x]);
   return Promise.all(promises).then((data) => {
     let result = {
-      docs: data.docs,
+      [docsName]: data.docs,
       total: data.count,
       limit: limit
     };
