@@ -24,6 +24,7 @@ function paginate(query, options, callback) {
     var populate   = options.populate;
     var lean       = options.lean || false;
     var leanWithId = options.hasOwnProperty('leanWithId') ? options.leanWithId : true;
+    var docsName    = options.docsName || 'docs';
 
     var limit = options.hasOwnProperty('limit') ? options.limit : 10;
     var skip, offset, page;
@@ -75,7 +76,7 @@ function paginate(query, options, callback) {
     return Promise.props(promises)
         .then(function(data) {
             var result = {
-                docs:  data.docs,
+                [docsName]:  data.docs,
                 total: data.count,
                 limit: limit
             };
